@@ -10,7 +10,7 @@ flag = True
 def main():
     current_datetime = datetime.datetime.now()
     formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
-    IP = "10.1.1.17"
+    IP = "10.1.1.17" #Replace th IP Address
     PING = "timeout 1 ping -c 1 " + IP
 
     output = subprocess.getoutput(PING)
