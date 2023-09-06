@@ -1,0 +1,36 @@
+# Simple Host Alive Monitor
+
+from send_sms import send_sms
+
+import subprocess,time
+import datetime
+
+flag = True
+
+def main():
+    current_datetime = datetime.datetime.now()
+    formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+    IP = "10.1.1.17"
+    PING = "timeout 1 ping -c 1 " + IP
+
+    output = subprocess.getoutput(PING)
+
+    try:
+        if f"64 bytes from {IP}:" in output.split("\n")[1]:
+            print(f"{formatted_datetime}\t{IP}\tConnectivity is Successful..")
+            flag = True
+        time.sleep(2)
+    except KeyboardInterrupt:
+        print("Cancelled")
+        exit()
+    except:
+        print("-" * 45)
+        print(f"{formatted_datetime}\t{IP}\tConnectivity is Lost..")
+        print("-" * 45)
+        flag = False
+        # send_sms()
+
+    return flag
+
+while flag:
+    flag = main()
